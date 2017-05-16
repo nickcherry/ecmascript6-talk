@@ -1,0 +1,315 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ECMAScript 6</title>
+  <link rel="stylesheet" href="./dist/talkie.min.css">
+  <link rel="stylesheet" href="./dist/talkie-default.min.css">
+  <link rel="stylesheet" href="./dist/monokai_sublime.min.css">
+</head>
+<body>
+
+<template invert layout="cover" type="text/x-markdown">
+
+# ECMAScript 6
+
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## What the hell is ECMAScript 6?
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## A shinier version of ESCMAScript 5?
+
+<br>
+
+## ¯\\\_(ツ)_/¯
+
+</template>
+
+
+<!-- *********************************************************************** -->
+
+
+<template invert layout="code" type="text/x-markdown">
+
+- A long, long time ago...
+- i.e. 1996
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Let
+
+```javascript
+
+let x = 42;
+
+x = 43;
+
+let x = 1;
+// SyntaxError: Identifier 'x' has already been declared
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Const
+
+```javascript
+const x = 42;
+x = 43;
+// TypeError: Assignment to constant variable.
+
+const obj = {};
+obj = 'lol';
+// TypeError: Assignment to constant variable.
+
+obj.prop = 'ok';
+// No problemo.
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" class="split" type="text/x-markdown">
+
+## Classes
+
+```javascript
+class MyClass {
+  constructor() {
+
+  }
+
+  meth() {
+
+  }
+
+  get name() {
+
+  }
+}
+```
+
+```javascript
+o = new MyClass();
+o.meth();
+o.name
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Subclasses
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Arrow Functions
+
+(Remembering the ES5 Days)
+
+```javascript
+function holler() {
+  console.log('hi')
+}
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Map
+
+```javascript
+
+
+```
+</template>
+
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Reduce
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Default Values
+
+```javascript
+
+
+```
+</template>
+
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Rest
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Spread
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Destructuring
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Template Strings
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Sets
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Promises
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Fetch
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Modules
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Generators
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+
+## Proxies
+
+```javascript
+
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<script src="./dist/highlight.min.js"></script>
+<script src="./dist/talkie.min.js"></script>
+<script>
+  var talkie = Talkie({ wide: true });
+  document.addEventListener('DOMContentLoaded', function() {
+    talkie.changed.subscribe(function(current) {
+      console.clear();
+      console.info(talkie.notes[current.getAttribute('data-page')]);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "allowJs": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "inlineSourceMap": true,
+    "target": "es5",
+    "lib": [
+        "es2015",
+        "dom"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "typings"
+  ]
+}
