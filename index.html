@@ -11,6 +11,7 @@
 <template invert layout="cover" type="text/x-markdown">
 
 # ECMAScript 6
+## (in 5 to 10 minutes)
 
 
 </template>
@@ -18,48 +19,83 @@
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
+## What the hell is ECMAScript?
 
-## What the hell is ECMAScript 6?
+<ul>
+  <li>
+    A long, long time ago (1995), Netscape released a scripting language called Livescript.
+    <!-- later rebranded as "Javascript" in an attempt to capitalize on the popularity of Java at the time -->
+  </li>
+  <li>
+    Netscape submitted their code to "a standards organization for information and communication systems" called ECMA International.
+  </li>
+  <li>
+    The spec that came back — ECMAScript — turned out to be the basis for all major implementations of JavaScript.
+  </li>
+</ul>
 
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## A shinier version of ESCMAScript 5?
-
-<br>
-
-## ¯\\\_(ツ)_/¯
-
-</template>
-
-
-<!-- *********************************************************************** -->
-
-
-<template invert layout="code" type="text/x-markdown">
-
-- A long, long time ago...
-- i.e. 1996
+<img src="dist/true-story.png">
 
 </template>
 
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
+## What the hell is ECMAScript? (continued)
 
+<ul>
+  <li>
+    For the first several versions, most developers paid no attention to ECMAScript.
+  </li>
+  <li class="hidden-temporarily">
+    But that all started to change in 2012, when the nerds began rioting.
+  </li>
+  <li class="hidden-temporarily">
+    They rallied behind standardization that promised to usher in a new era of javascript, one that could withstand the increasing demands of front-end development.
+  </li>
+  <li class="hidden-temporarily">
+    They demanded the heads of villains (e.g. Internet Explorer 6) who stood in the way of progress.
+  </li>
+  <li class="hidden-temporarily">
+    And they championed heroes (e.g. Chrome) who embraced the spec with open arms.
+  </li>
+  <li class="hidden-temporarily">
+    Today all modern browsers (even Internet Explorer) stay <i>mostly</i> up-to-date with the latest finalized ECMAScript – currently ES6.
+  </li>
+</ul>
+
+<div class="removable-image" id="nobody-cares-image" onclick="activateParentSection(this)">
+  <img src="./dist/nobody-cares.jpg">
+</div>
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Things are better, but not perfect.
+
+<ul>
+  <li>Of course there are the not-so-shiny browsers.</li>
+  <li>Even the good ones adopt new language features at varying rates.</li>
+  <li style="position:relative;">Fortunately, we have tools like <img src="./dist/babel.png" width="180" style="position: absolute; top: -20px; line-height: 0"></li>
+  <li>They allow us to use the latest ECMAScript features in our code, but transpile the javascript to ES5, polyfilling the parts that some browers don't understand yet.</li>
+  <li>Which means, we can start using them today. <img src="./dist/yippee.png" style="vertical-align: top; margin-left: 15px" width="220"></li>
+</ul>
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
 ## Let
 
 ```javascript
+let it = "be";
 
-let x = 42;
+it = "can be something else, if it wants";
 
-x = 43;
-
-let x = 1;
-// SyntaxError: Identifier 'x' has already been declared
+let it = "be again";
+// SyntaxError: Identifier 'it' has already been declared
 
 ```
 </template>
@@ -67,163 +103,208 @@ let x = 1;
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
-
 ## Const
 
 ```javascript
-const x = 42;
-x = 43;
+const primitive = 'immutable';
+primitive = 'Banana!';
 // TypeError: Assignment to constant variable.
 
-const obj = {};
-obj = 'lol';
+
+const object = { immutable: true };
+object = { immutable: false };
 // TypeError: Assignment to constant variable.
 
-obj.prop = 'ok';
-// No problemo.
+
+object.immutable = false;
+// This is fine. (lol)
+
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Template Strings
+
+```javascript
+const x = 'cheese';
+
+`I love ${ x }.`
+// I love cheese.
+
+`Particularly ${ x.constructor.name.toLowerCase() } ${ x }.`
+// Particularly string cheese.
+
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" class="split" type="text/x-markdown">
+## Classes
+
+```javascript
+class Dog {
+
+  static get defaultGreeting() { return 'Woof.'; }
+
+  constructor(firstName, lastName, greeting = Dog.defaultGreeting) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.greeting = greeting;
+  }
+
+  get name() {
+    return `${ this.firstName } ${ this.lastName }`;
+  }
+
+  speak() {
+    console.log(this.greeting);
+  }
+}
+```
+
+```javascript
+const scoob = new Dog('Scooby', 'Doo');
+
+scoob.name;
+// Scooby Doo
+
+scoob.speak();
+// Woof.
+
+scoob.greeting = 'Ruh-roh!';
+scoob.speak();
+// Ruh-roh!
+
+typeof Dog
+// function
+
+Dog.prototype.speak.bind({
+  greeting: 'Zoinks!'
+})();
+// Zoinks!
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<!-- It's all fake! No classifical inheritance model; it's all prototypal inheritance. -->
+<template invert layout="code" class="split" type="text/x-markdown">
+## Classes (i.e. Smoke and Mirrors)
+
+```javascript
+const Dog = function(firstName, lastName, greeting) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.greeting = greeting || Dog.defaultGreeting;
+};
+
+Dog.defaultGreeting = 'Woof.';
+
+Dog.prototype.name = function() {
+  return `${ this.firstName } ${ this.lastName }`;
+};
+
+Dog.prototype.speak = function() {
+  console.log(this.greeting);
+};
+```
+
+```javascript
+const scoob = new Dog('Scooby', 'Doo');
+
+scoob.name();
+// Scooby Doo
+
+scoob.speak();
+// Woof.
+
+scoob.greeting = 'Ruh-roh!';
+scoob.speak();
+// Ruh-roh!
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Arrow Functions (The Sugar)
+
+<pre><code class="javascript">// Old Way
+function add(a, b) {
+  return a + b;
+}
+
+// New Way
+const add = (a, b) => {
+  return a + b;
+};
+
+// New Way: Terse Edition – More like Terse ADDition, amirite?
+const add = (a, b) => a + b;
+</code></pre>
 
 </template>
 
 <!-- *********************************************************************** -->
 
 <template invert layout="code" class="split" type="text/x-markdown">
+## Arrow Functions (The Execution Context)
 
-## Classes
 
-```javascript
-class MyClass {
-  constructor() {
-
+<pre><code class="javascript">const $ = {
+  ajax: function(callback) {
+    setTimeout(callback);
   }
+};
 
-  meth() {
+const FetchBot = function(name) {
+  this.name = name;
 
-  }
+  this.oldFetch = function() {
+    $.ajax(function() { // Note the classic function
+      console.log(`${ this.name } has returned with your data.`);
+    });
+  };
 
-  get name() {
-
-  }
-}
-```
+  this.newFetch = function() {
+    $.ajax(() => { // Note the arrow function
+      console.log(`${ this.name } has returned with your data.`);
+    });
+  };
+};
+</code></pre>
 
 ```javascript
-o = new MyClass();
-o.meth();
-o.name
+const fred = new FetchBot('Fred');
+
+fred.oldFetch();
+// undefined has returned with your data.
+
+fred.newFetch();
+// Fred has returned with your data.
 ```
 </template>
 
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
+## Array Methods
 
-## Subclasses
+<pre><code class="javascript">// Map
+[1, 2, 3, 4].map((x) => x * x) // [1, 4, 9, 16]
 
-```javascript
+// Reduce
+[1, 2, 3, 4].reduce((sum, x) => sum + x) // 10
+[1, 2, 3, 4].reduce((str, x) => str + x, '') // "1234"
 
+// Filter
+[1, 2, 3, 4].filter((x) => x % 2) // [2, 4]
 
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Arrow Functions
-
-(Remembering the ES5 Days)
-
-```javascript
-function holler() {
-  console.log('hi')
-}
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Map
-
-```javascript
-
-
-```
-</template>
-
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Reduce
-
-```javascript
-
-
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Default Values
-
-```javascript
-
-
-```
-</template>
-
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Rest
-
-```javascript
-
-
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Spread
-
-```javascript
-
-
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Destructuring
-
-```javascript
-
-
-```
-</template>
-
-<!-- *********************************************************************** -->
-
-<template invert layout="code" type="text/x-markdown">
-
-## Template Strings
-
-```javascript
-
-
-```
+// Find
+[1, 2, 3, 4].find((x) => x > 2) // 3
+</code></pre>
 </template>
 
 <!-- *********************************************************************** -->
@@ -233,7 +314,17 @@ function holler() {
 ## Sets
 
 ```javascript
+const uniqueLetters = new Set(['a', 'a', 'b', 'b', 'b', 'c']);
+// Set { 'a', 'b', 'c' }
 
+uniqueLetters.add('d');
+// Set { 'a', 'b', 'c', 'd' }
+
+uniqueLetters.delete('d');
+// Set { 'a', 'b', 'c' }
+
+new Set(['Highlander', 'Highlander', 'Highlander']).size
+// 1
 
 ```
 </template>
@@ -241,11 +332,71 @@ function holler() {
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
+## Rest
 
-## Promises
+<pre><code class="javascript">function join1(...args) {
+  return args.join(' ');
+};
+
+function join2(delimiter, ...args) {
+  return args.join(delimiter);
+};
+
+function join3(...args, delimiter) {
+  return args.join(delimiter);
+}
+
+join1('Yesterday', 'it', 'worked');
+join2(" ", "Today,", "it", "is", "not", "working");
+join3("Tests", "can", "be", "like", "that, " ");
+
+</code>
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Spread
+
+<pre><code class="javascript">const numbers = [5, 3, 7, 1, 9];
+Math.min(...numbers);
+// 1
+
+const arr1 = ['two', 'three'];
+const arr2 = ['one', ...arr1, 'four'];
+// ["one", "two", "three", "four"]
+
+const arr3 = [...arr2];
+// ["one", "two", "three", "four"]
+
+arr2 == arr3
+// true
+arr2 === arr3
+// false
+</code></pre>
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Destructuring
 
 ```javascript
+const patient = {
+  firstName: 'Ron',
+  lastName: 'Swanson',
+  username: 'MeatTornado60',
+  allergies: ['cowardice', 'weak-willed men', 'hazelnuts'],
+};
 
+const { firstName, lastName } = patient;
+// firstName: "Ron", lastName: "Swanson"
+
+const [allergy1, allergy2, allergy3] = patient.allergies;
+// allergy1: "cowardice", allergy2: "weak-willed men", allergy3: "hazelnuts"
+
+const [primaryAllergy, ...secondaryAllergies] = patient.allergies;
+// primaryAllergy: "cowardice", secondaryAllergies: ["weak-willed men", "hazelnuts"]
 
 ```
 </template>
@@ -253,23 +404,117 @@ function holler() {
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
+## Destructuring (continued)
+
+```javascript
+function name({ firstName, lastName }) {
+  return `${ firstName } ${ lastName }`;
+}
+name(patient);
+// "Ron Swanson"
+
+
+function initials({ firstName, lastName }) {
+  const firstInitial = firstName.charAt(0).toUpperCase();;
+  const lastInitial = lastName.charAt(0).toUpperCase();
+  return { firstInitial, lastInitial };
+}
+initials(patient)
+// { firstInitial: "R", lastInitial: "S" }
+```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" type="text/x-markdown">
+## Promises
+<pre><code class="javascript">const promise = new Promise((resolve, reject) => {
+  setTimeout(function() {
+    if (Math.random() < 0.85) {
+      resolve('Super!');
+    } else {
+      reject('Something terrible happened.')
+    }
+  });
+});
+
+promise
+  .then((result) => console.log(result))
+  .catch((result) => console.error(result))
+
+// ~85% of the time: "Super!"
+// ~15% of the time: "Something terrible happened."
+</code></pre>
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" id="fetch-slide" type="text/x-markdown">
 
 ## Fetch
 
-```javascript
+<div class="removable-image" id="fetch-image" onclick="activateParentSection(this)">
+  <img src="./dist/fetch.png">
+</div>
+
+<pre><code class="javascript">fetch('https://httpbin.org/get')
+  .then((response) => response.json())
+  .then((json) => console.log('The parsed payload:', json))
+  .catch(console.error)
 
 
-```
+const [method, body] = ['post', { firstName: "Moe", lastName: "Szyslak" }];
+
+fetch('https://httpbin.org/post', { method, body })
+  .then((response) => response.text())
+  .then((text) => console.log('The payload in plain text:', text))
+  .catch(console.error)
+</code></pre>
+
 </template>
 
 <!-- *********************************************************************** -->
 
-<template invert layout="code" type="text/x-markdown">
+<template invert layout="code" class="split even" type="text/x-markdown">
 
 ## Modules
 
-```javascript
+<pre><code class="javascript">// maths.js
 
+module.exports.add = (...args) => {
+  return args.reduce((sum, x) => sum + x));
+};
+
+module.exports.difference = (...args) => {
+  return args.reduce((diff, x) => diff - x);
+};
+
+module.exports.multiply = (...args) => {
+  return args.reduce((product, x) => product + x);
+};
+
+module.exports.divide = (...args) => {
+  return args.reduce((dividend, x) => dividend / x);
+}
+</code></pre>
+
+```javascript
+// Import all the things
+import Maths from 'maths';
+
+Maths.add(1, 2, 3, 4);
+// 10
+Maths.multiply(1, 2, 3, 4);
+// 24
+
+
+// Or take only what you need
+import { add, multiply } from 'maths';
+
+add(1, 2, 3, 4);
+// 10
+multiply(1, 2, 3, 4);
+// 24
 
 ```
 </template>
@@ -281,26 +526,113 @@ function holler() {
 ## Generators
 
 ```javascript
+function *myGenerator() {
+  yield 'First Value';
+  yield 'Second Value';
+}
 
+const iterator = myGenerator();
 
+iterator.next();
+// { value: "First Value", done: false }
+
+iterator.next();
+// { value: "Second Value", done: false }
+
+iterator.next();
+// { value: undefined, done: true }
 ```
+</template>
+
+<!-- *********************************************************************** -->
+
+<template invert layout="code" class="split even smaller" type="text/x-markdown">
+
+## Generators (continued)
+
+<pre><code class="javascript">import co from 'co';
+
+function fetchJson(url) {
+  return fetch(url).then((res) => res.json());
+}
+
+function searchArtists(name) {
+  return fetchJson(`/artists/search?q=${ name }`);
+}
+
+function fetchAlbums(artistId) {
+  return fetchJson(`/artists/${ artistId }/albums`);
+}
+
+function fetchArtwork(artistId) {
+  return fetchJson(`/artists/${ artistId }/artwork`);
+}
+
+function fetchSongs(artistId) {
+  return fetchJson(`/artists/${ artistId }/songs`);
+}
+</code></pre>
+<pre><code class="javascript">async function findArtistContent(artistName) {
+  return co(function*() {
+    const artist = yield searchArtists(artistName);
+    const [albums, artwork, songs] = yield [
+      fetchAlbums(artist.id),
+      fetchArtwork(artist.id),
+      fetchSongs(artist.id),
+    ];
+    return { albums, artist, artwork, songs };
+  }).catch(console.error);
+}
+
+findArtistContent('Radiohead').then(console.log);
+// {
+//   albums:  [ "OK Computer", "Kid A", In Rainbows", ...],
+//   artist:  { name: "Radiohead", genre: "Indie Rock", ... },
+//   artwork: { url: "http://radiohead.com/artwork.png", ... },
+//   songs:   [ Fake Plastic Trees", "Airbag", ...]
+// }
+</code></pre>
 </template>
 
 <!-- *********************************************************************** -->
 
 <template invert layout="code" type="text/x-markdown">
 
-## Proxies
+## But (a)wait, there's more... (ES7 Sneak Peek)
 
 ```javascript
+async function findArtistContent(artistName) {
+  try {
+    const artist = await searchArtists(artistName);
+    const [albums, artwork, songs] = await Promise.all([
+      fetchAlbums(artist.id),
+      fetchArtwork(artist.id),
+      fetchSongs(artist.id),
+    ]);
+    return { albums, artist, artwork, songs };
+  } catch(err) {
+    console.error(err);
+  }
+}
 
-
+findArtistContent('Radiohead').then(console.log);
 ```
 </template>
 
 <!-- *********************************************************************** -->
 
+<template invert layout="cover" type="text/x-markdown">
+
+# The End
+## (or perhaps, the beginning...)
+
+
+</template>
+
+<!-- *********************************************************************** -->
+
 <script src="./dist/highlight.min.js"></script>
+
 <script src="./dist/talkie.min.js"></script>
 <script>
   var talkie = Talkie({ wide: true });
@@ -308,7 +640,15 @@ function holler() {
     talkie.changed.subscribe(function(current) {
       console.clear();
       console.info(talkie.notes[current.getAttribute('data-page')]);
+
+      document.querySelectorAll('section[aria-hidden=false] code').forEach(function(block) {
+        hljs.highlightBlock(block);
+      });
     });
+
+    window.activateParentSection = function(el) {
+      el.parentElement.classList.add('activated');
+    };
   });
 </script>
 </body>

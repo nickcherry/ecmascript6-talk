@@ -7,3 +7,103 @@
 @import "./cover.css";
 @import "./title.css";
 @import "./transparent.css";
+
+[layout=cover] h2 {
+  font-size: 1.5em;
+  opacity: .75;
+  margin-top: -.75em;
+  text-align: center;
+}
+
+[layout=code] h2 {
+  margin-bottom:  .3em;
+  margin-top: .5em;
+}
+
+[layout=code] ul {
+  font-size: 1.85em;
+  padding-left: 25px;
+}
+
+[layout=code] li {
+  list-style-type: circle;
+  margin-bottom: 1em;
+}
+
+.hidden-temporarily,
+#fetch-slide pre {
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+}
+
+section {
+  position: relative;
+}
+
+section.activated .hidden-temporarily,
+#fetch-slide.activated pre {
+  opacity: 1;
+}
+
+.removable-image {
+  cursor: pointer;
+  left: 50%;
+  position: absolute;
+  z-index: 9999;
+}
+
+.removable-image::before {
+  content: "Click Me ➡";
+  font-weight: bold;
+  font-size: 0.9em;
+  left: -105px;
+  opacity: .25;
+  position: absolute;
+  top: 48%;
+}
+
+#nobody-cares-image {
+  margin-left: -240px;
+  margin-top: -4px;
+  top: 220px;
+  width: 480px;
+}
+
+#fetch-image {
+  margin-left: -400px;
+  width: 800px;
+}
+
+section.activated .removable-image {
+  animation: fly-away 1s ease-out;
+  animation-fill-mode: forwards;
+}
+
+section.activated .removable-image::before {
+  content: none;
+}
+
+section.activated .removable-image img {
+  animation:  fly-away-img 1s ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fly-away {
+  0% {
+    transform: none;
+  }
+  40% {
+    opacity: .75;
+    transform: translate(440px, -390px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(780px, 400px);
+  }
+}
+
+@keyframes fly-away-img {
+  100% {
+    transform: rotate(1080deg) scale(0);
+  }
+}

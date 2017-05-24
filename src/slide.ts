@@ -22,7 +22,6 @@ const md = new MarkdownIt({
       console.log('highlight.js (`window.hljs`) is missing');
       return '';
     }
-
     if (lang && win.hljs.getLanguage(lang)) {
       try {
         return win.hljs.highlight(lang, str).value;
