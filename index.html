@@ -572,7 +572,7 @@ function fetchSongs(artistId) {
   return fetchJson(`/artists/${ artistId }/songs`);
 }
 </code></pre>
-<pre><code class="javascript">async function findArtistContent(artistName) {
+<pre><code class="javascript">function findArtistContent(artistName) {
   return co(function*() {
     const artist = yield searchArtists(artistName);
     const [albums, artwork, songs] = yield [
